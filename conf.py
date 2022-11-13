@@ -24,8 +24,8 @@ class INILoader(BaseConfLoader):
 
 
 class ENVLoader(BaseConfLoader):
-    def get_val(self, key):
-        val = environ.get(key)
+    def get_val(self, key: str):
+        val = environ.get(key.upper())
         return val or None
 
 
@@ -48,3 +48,12 @@ class ConfType(type):
 
 class Configuration(metaclass=ConfType):
     loaders = []
+
+
+if __name__ == '__main__':
+    class TestConf(Configuration):
+        loaders = [ENVLoader()]
+
+        path: str = ''
+
+    print(TestConf.path)
