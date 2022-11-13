@@ -1,7 +1,7 @@
 from typing import List
 from os import environ
 
-from configparser import ConfigParser, NoSectionError
+from configparser import ConfigParser, NoSectionError, NoOptionError
 
 
 class BaseConfLoader:
@@ -27,7 +27,7 @@ class INILoader(BaseConfLoader):
         scope, field = key.split('_', 1)
         try:
             return self.parser.get(scope, field)
-        except NoSectionError as e:
+        except (NoSectionError, NoOptionError) as e:
             return None
 
 
